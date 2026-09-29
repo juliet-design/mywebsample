@@ -1,0 +1,232 @@
+@page
+@model RentalHouseWebsite.Pages.AdminSearchModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Search";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Admin Search</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .header {
+            background: #111;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            color: #f5b400;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 14px 25px;
+            background: #f5b400;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .results {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #111;
+            color: white;
+            padding: 13px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            background: #111;
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        @@media(max-width:700px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            form {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>Rental House Admin</h1>
+
+        <div>
+            <a href="/AdminDashboard">Dashboard</a>
+            <a href="/AdminUsers">Users</a>
+            <a href="/Bookings">Bookings</a>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="search-box">
+
+            <h2>Search Users</h2>
+
+            <br>
+
+            <form method="get">
+
+                <input type="text"
+                       name="SearchTerm"
+                       value="@Model.SearchTerm"
+                       placeholder="Search by name or email">
+
+                <button type="submit">
+                    🔎 Search
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="results">
+
+            <h2>Search Results</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (Model.Users.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4">
+                                No users found.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            <tr>
+
+                                <td>@user.Id</td>
+
+                                <td>@user.Name</td>
+
+                                <td>@user.Email</td>
+
+                                <td>@user.Role</td>
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <a href="/AdminDashboard"
+           class="back">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+
+</html>

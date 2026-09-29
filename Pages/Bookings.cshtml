@@ -1,0 +1,300 @@
+@page
+@model RentalHouseWebsite.Pages.BookingsModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Manage Bookings";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Manage Bookings - Rental House</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .header {
+            background: #111;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #f5b400;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .header a:hover {
+            color: #f5b400;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top h2 {
+            font-size: 28px;
+        }
+
+        .back {
+            background: #f5b400;
+            color: #111;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #111;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: #eee;
+        }
+
+        .approve {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        @@media (max-width: 700px) {
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .top {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>Rental House Admin</h1>
+
+        <div>
+            <a href="/AdminDashboard">Dashboard</a>
+            <a href="/AdminUsers">Users</a>
+            <a href="/Properties">Properties</a>
+            <a href="/Payments">Payments</a>
+            <a href="/Login">Logout</a>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="top">
+
+            <h2>Manage Bookings</h2>
+
+            <a href="/AdminDashboard"
+               class="back">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Property</th>
+                        <th>Booking Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (Model.Bookings.Count == 0)
+                    {
+                        <tr>
+
+                            <td colspan="6"
+                                style="text-align:center;">
+
+                                No bookings found.
+
+                            </td>
+
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var booking in Model.Bookings)
+                        {
+                            <tr>
+
+                                <td>
+                                    @booking.Id
+                                </td>
+
+                                <td>
+                                    @booking.UserName
+                                </td>
+
+                                <td>
+                                    @booking.PropertyName
+                                </td>
+
+                                <td>
+                                    @booking.BookingDate.ToString("dd/MM/yyyy")
+                                </td>
+
+                                <td>
+
+                                    <span class="status">
+                                        @booking.Status
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="actions">
+
+                                        <form method="post"
+                                              asp-page-handler="Approve">
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@booking.Id" />
+
+                                            <button class="approve"
+                                                    type="submit">
+                                                Approve
+                                            </button>
+
+                                        </form>
+
+                                        <form method="post"
+                                              asp-page-handler="Reject">
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@booking.Id" />
+
+                                            <button class="reject"
+                                                    type="submit">
+                                                Reject
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

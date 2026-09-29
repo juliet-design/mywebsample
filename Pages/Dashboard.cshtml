@@ -1,0 +1,884 @@
+@page
+@model RentalHouseWebsite.Pages.DashboardModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<section class="admin-dashboard">
+
+    <div class="admin-container">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-logo">
+                <i class="fa-solid fa-house"></i>
+                Rental<span>Homes</span>
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>Admin Account</small>
+                </div>
+
+            </div>
+
+
+            <nav class="admin-menu">
+
+                <a href="#dashboard"
+                   class="admin-menu-link active">
+
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a asp-page="/Properties/Index"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-building"></i>
+                    <span>Properties</span>
+
+                </a>
+
+
+                <a href="#users"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-users"></i>
+                    <span>Users</span>
+
+                </a>
+
+
+                <a href="#bookings"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Bookings</span>
+
+                </a>
+
+
+                <a href="#payments"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span>Payments</span>
+
+                </a>
+
+
+                <a href="#messages"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Messages</span>
+
+                </a>
+
+
+                <a href="#reports"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Reports</span>
+
+                </a>
+
+
+                <a href="#settings"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-bottom">
+
+                <a asp-page="/Index"
+                   class="admin-menu-link">
+
+                    <i class="fa-solid fa-house"></i>
+                    <span>Back to Website</span>
+
+                </a>
+
+
+                <a asp-page="/Login"
+                   class="admin-menu-link logout-link">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN DASHBOARD ================= -->
+
+        <main class="admin-main">
+
+
+            <!-- TOP BAR -->
+
+            <div class="admin-topbar">
+
+                <div>
+
+                    <h1>Admin Dashboard</h1>
+
+                    <p>
+                        Welcome back, Administrator.
+                        Here's an overview of your rental platform.
+                    </p>
+
+                </div>
+
+
+                <a asp-page="/Properties/Index"
+                   class="admin-add-button">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Property
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= STATISTICS ================= -->
+
+            <div class="admin-stats">
+
+
+                <!-- PROPERTIES -->
+
+                <div class="admin-stat-card">
+
+                    <div class="stat-icon property-icon">
+
+                        <i class="fa-solid fa-building"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Total Properties</span>
+
+                        <h2>
+                            @Model.TotalProperties
+                        </h2>
+
+                        <small class="stat-positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            8% this month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- USERS -->
+
+                <div class="admin-stat-card">
+
+                    <div class="stat-icon user-icon">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Registered Users</span>
+
+                        <h2>
+                            @Model.TotalUsers
+                        </h2>
+
+                        <small class="stat-positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            12% this month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOOKINGS -->
+
+                <div class="admin-stat-card">
+
+                    <div class="stat-icon booking-icon">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Active Bookings</span>
+
+                        <h2>
+                            @Model.ActiveBookings
+                        </h2>
+
+                        <small>
+                            Current bookings
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENTS -->
+
+                <div class="admin-stat-card">
+
+                    <div class="stat-icon payment-icon">
+
+                        <i class="fa-solid fa-money-bill-wave"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Total Payments</span>
+
+                        <h2>
+                            KSh @Model.TotalPayments.ToString("N0")
+                        </h2>
+
+                        <small class="stat-positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            Revenue
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================= SECONDARY STATISTICS ================= -->
+
+            <div class="admin-secondary-stats">
+
+
+                <div class="mini-stat">
+
+                    <div>
+
+                        <span>Pending Payments</span>
+
+                        <strong>
+                            KSh @Model.PendingPayments.ToString("N0")
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <div>
+
+                        <span>New Messages</span>
+
+                        <strong>
+                            @Model.NewMessages
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <div>
+
+                        <span>Available Homes</span>
+
+                        <strong>
+                            31
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-house-circle-check"></i>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <div>
+
+                        <span>Rented Homes</span>
+
+                        <strong>
+                            17
+                        </strong>
+
+                    </div>
+
+                    <i class="fa-solid fa-house-user"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RECENT BOOKINGS ================= -->
+
+            <section class="admin-panel"
+                     id="bookings">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Recent Bookings</h2>
+
+                        <p>
+                            Latest rental property bookings
+                        </p>
+
+                    </div>
+
+                    <a href="#">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Property</th>
+                                <th>Tenant</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+                                        Modern 2 Bedroom
+                                    </strong>
+
+                                    <small>
+                                        Nairobi
+                                    </small>
+
+                                </td>
+
+                                <td>
+                                    Jane Wanjiku
+                                </td>
+
+                                <td>
+                                    25 Sep 2026
+                                </td>
+
+                                <td>
+                                    KSh 25,000
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-confirmed">
+                                        Confirmed
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button class="table-action">
+                                        View
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+                                        Family House
+                                    </strong>
+
+                                    <small>
+                                        Kiambu
+                                    </small>
+
+                                </td>
+
+                                <td>
+                                    Brian Kamau
+                                </td>
+
+                                <td>
+                                    24 Sep 2026
+                                </td>
+
+                                <td>
+                                    KSh 35,000
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-pending">
+                                        Pending
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button class="table-action">
+                                        View
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+                                        Luxury Family Home
+                                    </strong>
+
+                                    <small>
+                                        Ruiru
+                                    </small>
+
+                                </td>
+
+                                <td>
+                                    Mary Akinyi
+                                </td>
+
+                                <td>
+                                    23 Sep 2026
+                                </td>
+
+                                <td>
+                                    KSh 50,000
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-confirmed">
+                                        Confirmed
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <button class="table-action">
+                                        View
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= PAYMENTS ================= -->
+
+            <section class="admin-panel"
+                     id="payments">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Recent Payments</h2>
+
+                        <p>
+                            Latest rental payment transactions
+                        </p>
+
+                    </div>
+
+                    <a href="#">
+                        View All Payments
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Payment ID</th>
+                                <th>Customer</th>
+                                <th>Property</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    #PAY001
+                                </td>
+
+                                <td>
+                                    Jane Wanjiku
+                                </td>
+
+                                <td>
+                                    Modern Apartment
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        KSh 25,000
+                                    </strong>
+                                </td>
+
+                                <td>
+
+                                    <span class="payment-method">
+
+                                        <i class="fa-solid fa-mobile-screen-button"></i>
+
+                                        M-Pesa
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    #PAY002
+                                </td>
+
+                                <td>
+                                    Brian Kamau
+                                </td>
+
+                                <td>
+                                    Family House
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        KSh 35,000
+                                    </strong>
+                                </td>
+
+                                <td>
+
+                                    <span class="payment-method">
+
+                                        <i class="fa-solid fa-building-columns"></i>
+
+                                        Bank
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-pending">
+                                        Pending
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    #PAY003
+                                </td>
+
+                                <td>
+                                    Mary Akinyi
+                                </td>
+
+                                <td>
+                                    Luxury Home
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        KSh 50,000
+                                    </strong>
+                                </td>
+
+                                <td>
+
+                                    <span class="payment-method">
+
+                                        <i class="fa-solid fa-credit-card"></i>
+
+                                        Card
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= PAYMENT PROMPT ================= -->
+
+            <section class="payment-prompt"
+                     id="payment-prompt">
+
+                <div class="payment-prompt-content">
+
+                    <div class="payment-prompt-icon">
+
+                        <i class="fa-solid fa-house-circle-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>Ready to Rent a Home?</h2>
+
+                        <p>
+                            Choose a property and make your rental
+                            payment securely using your preferred
+                            payment method.
+                        </p>
+
+                    </div>
+
+                    <a asp-page="/Properties/Index"
+                       class="payment-prompt-button">
+
+                        Browse Properties
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MESSAGES ================= -->
+
+            <section class="admin-panel"
+                     id="messages">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Recent Messages</h2>
+
+                        <p>
+                            Customer enquiries
+                        </p>
+
+                    </div>
+
+                    <a asp-page="/Contact">
+                        View Messages
+                    </a>
+
+                </div>
+
+
+                <div class="message-list">
+
+                    <div class="admin-message">
+
+                        <div class="message-avatar">
+                            JW
+                        </div>
+
+                        <div class="message-content">
+
+                            <strong>
+                                Jane Wanjiku
+                            </strong>
+
+                            <p>
+                                I am interested in the
+                                2 bedroom apartment.
+                            </p>
+
+                            <small>
+                                15 minutes ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-message">
+
+                        <div class="message-avatar">
+                            BK
+                        </div>
+
+                        <div class="message-content">
+
+                            <strong>
+                                Brian Kamau
+                            </strong>
+
+                            <p>
+                                Is the family house still available?
+                            </p>
+
+                            <small>
+                                1 hour ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-message">
+
+                        <div class="message-avatar">
+                            MA
+                        </div>
+
+                        <div class="message-content">
+
+                            <strong>
+                                Mary Akinyi
+                            </strong>
+
+                            <p>
+                                I would like to schedule a viewing.
+                            </p>
+
+                            <small>
+                                2 hours ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</section>

@@ -1,0 +1,587 @@
+@page
+@model RentalHouseWebsite.Pages.AdminDashboardModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Rental House</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #111;
+            color: white;
+            padding: 25px 15px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            color: #f5b400;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .admin-label {
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #f5b400;
+            color: #111;
+        }
+
+        .section-title {
+            color: #777;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin: 25px 15px 8px;
+        }
+
+        .logout {
+            margin-top: 20px;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        .topbar h1 {
+            font-size: 26px;
+        }
+
+        .profile-link {
+            background: #111;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .profile-link:hover {
+            background: #f5b400;
+            color: #111;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .yellow {
+            border-left: 5px solid #f5b400;
+        }
+
+        .green {
+            border-left: 5px solid #198754;
+        }
+
+        .red {
+            border-left: 5px solid #dc3545;
+        }
+
+        .blue {
+            border-left: 5px solid #0d6efd;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .overview-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .overview-row:last-child {
+            border-bottom: none;
+        }
+
+        .overview-number {
+            font-weight: bold;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .quick-link {
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .quick-link:hover {
+            background: #f5b400;
+            color: #111;
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bookings-table th {
+            background: #111;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .bookings-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #eee;
+            font-size: 12px;
+        }
+
+        @@media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @@media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            RENTAL HOUSE
+        </div>
+
+        <div class="admin-label">
+            ADMIN PANEL
+        </div>
+
+        <a href="/AdminDashboard" class="active">
+            🏠 Dashboard
+        </a>
+
+        <a href="/Properties">
+            🏢 Properties
+        </a>
+
+        <a href="/AdminUsers">
+            👥 Users
+        </a>
+
+        <a href="/Bookings">
+            📅 Bookings
+        </a>
+
+        <a href="/Payments">
+            💳 Payments
+        </a>
+
+        <div class="section-title">
+            Management
+        </div>
+
+        <a href="/AdminSearch">
+            🔎 Search
+        </a>
+
+        <a href="/Analytics">
+            📊 Analytics
+        </a>
+
+        <a href="/Reports">
+            📄 Reports
+        </a>
+
+        <div class="section-title">
+            Account
+        </div>
+
+        <a href="/AdminProfile">
+            👤 Admin Profile
+        </a>
+
+        <a href="/AdminSettings">
+            ⚙️ Settings
+        </a>
+
+        <div class="logout">
+
+            <a href="/Login">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Welcome to the Rental House administration panel.</p>
+            </div>
+
+            <a href="/AdminProfile"
+               class="profile-link">
+                👤 Profile
+            </a>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+            <div class="card yellow">
+
+                <div class="stat-title">
+                    Total Properties
+                </div>
+
+                <div class="stat-number">
+                    @Model.TotalProperties
+                </div>
+
+            </div>
+
+
+            <div class="card green">
+
+                <div class="stat-title">
+                    Available Properties
+                </div>
+
+                <div class="stat-number">
+                    @Model.AvailableProperties
+                </div>
+
+            </div>
+
+
+            <div class="card red">
+
+                <div class="stat-title">
+                    Occupied Properties
+                </div>
+
+                <div class="stat-number">
+                    @Model.OccupiedProperties
+                </div>
+
+            </div>
+
+
+            <div class="card blue">
+
+                <div class="stat-title">
+                    Total Users
+                </div>
+
+                <div class="stat-number">
+                    @Model.TotalUsers
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="card blue">
+
+                <div class="stat-title">
+                    Total Bookings
+                </div>
+
+                <div class="stat-number">
+                    @Model.TotalBookings
+                </div>
+
+            </div>
+
+
+            <div class="card yellow">
+
+                <div class="stat-title">
+                    Pending Bookings
+                </div>
+
+                <div class="stat-number">
+                    @Model.PendingBookings
+                </div>
+
+            </div>
+
+
+            <div class="card green">
+
+                <div class="stat-title">
+                    Approved Bookings
+                </div>
+
+                <div class="stat-number">
+                    @Model.ApprovedBookings
+                </div>
+
+            </div>
+
+
+            <div class="card green">
+
+                <div class="stat-title">
+                    Total Payments
+                </div>
+
+                <div class="stat-number">
+                    KSh @Model.TotalPayments.ToString("N0")
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERVIEW -->
+
+        <div class="dashboard-grid">
+
+            <div class="card">
+
+                <h2>Property Overview</h2>
+
+                <div class="overview-row">
+                    <span>Total Properties</span>
+                    <span class="overview-number">
+                        @Model.TotalProperties
+                    </span>
+                </div>
+
+                <div class="overview-row">
+                    <span>Available</span>
+                    <span class="overview-number">
+                        @Model.AvailableProperties
+                    </span>
+                </div>
+
+                <div class="overview-row">
+                    <span>Occupied</span>
+                    <span class="overview-number">
+                        @Model.OccupiedProperties
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>Booking Overview</h2>
+
+                <div class="overview-row">
+                    <span>Total Bookings</span>
+                    <span class="overview-number">
+                        @Model.TotalBookings
+                    </span>
+                </div>
+
+                <div class="overview-row">
+                    <span>Pending</span>
+                    <span class="overview-number">
+                        @Model.PendingBookings
+                    </span>
+                </div>
+
+                <div class="overview-row">
+                    <span>Approved</span>
+                    <span class="overview-number">
+                        @Model.ApprovedBookings
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="card">
+
+            <h2>Quick Actions</h2>
+
+            <div class="quick-links">
+
+                <a href="/Properties"
+                   class="quick-link">
+                    🏢 Manage Properties
+                </a>
+
+                <a href="/AdminUsers"
+                   class="quick-link">
+                    👥 Manage Users
+                </a>
+
+                <a href="/Bookings"
+                   class="quick-link">
+                    📅 Manage Bookings
+                </a>
+
+                <a href="/Payments"
+                   class="quick-link">
+                    💳 View Payments
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+@page
+@model RentalHouseWebsite.Pages.ContactModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<section class="page-header">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Get in touch with Rental House</p>
+    </div>
+</section>
+
+<section class="contact-section">
+
+    <div class="container">
+
+        <div class="contact-grid">
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+
+                <span class="section-label">
+                    GET IN TOUCH
+                </span>
+
+                <h2>We Would Love To Hear From You</h2>
+
+                <p>
+                    Have a question about a property or need help finding
+                    your next home? Contact us and our team will be happy
+                    to assist you.
+                </p>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📍
+                    </div>
+
+                    <div>
+                        <h3>Our Location</h3>
+                        <p>Nairobi, Kenya</p>
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📞
+                    </div>
+
+                    <div>
+                        <h3>Phone</h3>
+                        <p>+254 700 000 000</p>
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        ✉️
+                    </div>
+
+                    <div>
+                        <h3>Email</h3>
+                        <p>info@rentalhouse.com</p>
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        🕐
+                    </div>
+
+                    <div>
+                        <h3>Opening Hours</h3>
+                        <p>Monday - Saturday: 8:00 AM - 6:00 PM</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+
+                <h2>Send Us A Message</h2>
+
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="success-message">
+                        @Model.Message
+                    </div>
+                }
+
+                <form method="post">
+
+                    <div class="form-group">
+
+                        <label asp-for="Name">
+                            Full Name
+                        </label>
+
+                        <input asp-for="Name"
+                               type="text"
+                               placeholder="Enter your full name"
+                               required />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="Email">
+                            Email Address
+                        </label>
+
+                        <input asp-for="Email"
+                               type="email"
+                               placeholder="Enter your email"
+                               required />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="Subject">
+                            Subject
+                        </label>
+
+                        <input asp-for="Subject"
+                               type="text"
+                               placeholder="Enter subject"
+                               required />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label asp-for="MessageText">
+                            Message
+                        </label>
+
+                        <textarea asp-for="MessageText"
+                                  rows="6"
+                                  placeholder="Write your message here..."
+                                  required></textarea>
+
+                    </div>
+
+
+                    <button type="submit" class="contact-button">
+                        Send Message
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

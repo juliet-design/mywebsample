@@ -1,0 +1,450 @@
+@page
+@model RentalHouseWebsite.Pages.AnalyticsModel
+
+@{
+Layout = null;
+ViewData["Title"] = "Analytics";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<title>Analytics - Rental House</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f6f9;
+        color: #222;
+    }
+
+    .header {
+        background: #111;
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header h1 {
+        color: #f5b400;
+    }
+
+    .header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+    }
+
+    .header a:hover {
+        color: #f5b400;
+    }
+
+    .container {
+        padding: 30px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .card h3 {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .number {
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .chart {
+        background: white;
+        margin-top: 25px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .chart h2 {
+        margin-bottom: 8px;
+    }
+
+    .description {
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    /* GRAPH */
+
+    .graph {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        height: 350px;
+        border-left: 2px solid #333;
+        border-bottom: 2px solid #333;
+        padding: 20px 40px 0 40px;
+        position: relative;
+    }
+
+    .bar-column {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        width: 25%;
+    }
+
+    .bar-value {
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .bar {
+        width: 70px;
+        min-height: 3px;
+        background: #f5b400;
+        border-radius: 8px 8px 0 0;
+        transition: 0.3s;
+    }
+
+    .bar:hover {
+        background: #111;
+    }
+
+    .bar-name {
+        margin-top: 12px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .status-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-top: 25px;
+    }
+
+    .status-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .status-card h3 {
+        margin-bottom: 10px;
+    }
+
+    .status-number {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 25px;
+        background: #111;
+        color: white;
+        padding: 12px 18px;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+
+    .back:hover {
+        background: #f5b400;
+        color: #111;
+    }
+
+    @@media(max-width:900px) {
+
+        .cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .status-section {
+            grid-template-columns: 1fr;
+        }
+
+        .bar {
+            width: 50px;
+        }
+
+    }
+
+    @@media(max-width:600px) {
+
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .header a {
+            margin-left: 0;
+            margin-right: 15px;
+        }
+
+        .graph {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .bar {
+            width: 35px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>Rental House Analytics</h1>
+
+    <div>
+
+        <a href="/AdminDashboard">
+            Dashboard
+        </a>
+
+        <a href="/Reports">
+            Reports
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="container">
+
+    <h2>System Analytics</h2>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Users</h3>
+
+            <div class="number">
+                @Model.TotalUsers
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Total Bookings</h3>
+
+            <div class="number">
+                @Model.TotalBookings
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Pending Bookings</h3>
+
+            <div class="number">
+                @Model.PendingBookings
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Approved Bookings</h3>
+
+            <div class="number">
+                @Model.ApprovedBookings
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- GRAPH -->
+
+    <div class="chart">
+
+        <h2>Booking Statistics</h2>
+
+        <p class="description">
+            Current booking statistics from the database
+        </p>
+
+
+        <div class="graph">
+
+
+            <!-- TOTAL BOOKINGS -->
+
+            <div class="bar-column">
+
+                <div class="bar-value">
+                    @Model.TotalBookings
+                </div>
+
+                <div class="bar"
+                     style="height:@(Model.TotalBookings == 0 ? 3 : Math.Max(Model.TotalBookings * 15, 3))px;">
+                </div>
+
+                <div class="bar-name">
+                    Total
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="bar-column">
+
+                <div class="bar-value">
+                    @Model.PendingBookings
+                </div>
+
+                <div class="bar"
+                     style="height:@(Model.PendingBookings == 0 ? 3 : Math.Max(Model.PendingBookings * 15, 3))px;">
+                </div>
+
+                <div class="bar-name">
+                    Pending
+                </div>
+
+            </div>
+
+
+            <!-- APPROVED -->
+
+            <div class="bar-column">
+
+                <div class="bar-value">
+                    @Model.ApprovedBookings
+                </div>
+
+                <div class="bar"
+                     style="height:@(Model.ApprovedBookings == 0 ? 3 : Math.Max(Model.ApprovedBookings * 15, 3))px;">
+                </div>
+
+                <div class="bar-name">
+                    Approved
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="status-section">
+
+
+        <div class="status-card">
+
+            <h3>Pending Bookings</h3>
+
+            <div class="status-number">
+                @Model.PendingBookings
+            </div>
+
+            <p>
+                @Model.PendingPercentage% of all bookings
+            </p>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <h3>Approved Bookings</h3>
+
+            <div class="status-number">
+                @Model.ApprovedBookings
+            </div>
+
+            <p>
+                @Model.ApprovedPercentage% of all bookings
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <a href="/AdminDashboard"
+       class="back">
+
+        ← Back to Dashboard
+
+    </a>
+
+</div>
+
+
+</body>
+
+</html>
